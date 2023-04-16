@@ -6,6 +6,8 @@ class Author(models.Model):
     first_name = models.CharField(max_length=16)
     last_name = models.CharField(max_length=32)
 
+    def __str__(self) -> str:
+        return f'{self.first_name} {self.last_name}'
 
 class Book(models.Model):
 
