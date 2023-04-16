@@ -5,7 +5,9 @@ from invoke import task
 def coverage(ctx):
     msg = "Coverage finished!"
     cmd = [
-        "coverage run --source='.' ./testapp/manage.py test",
+        "ls",
+        "pwd",
+        "coverage run  --source='testapp/api/.' testapp/manage.py test api",
         "coverage report --omit='*migrations*'",
         "coverage html"
     ]

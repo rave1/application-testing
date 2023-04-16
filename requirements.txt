@@ -3,6 +3,7 @@ coverage==7.2.3
 Django==4.2
 djangorestframework==3.14.0
 exceptiongroup==1.1.1
+factory-boy==3.2.1
 Faker==18.4.0
 iniconfig==2.0.0
 invoke==2.0.0
