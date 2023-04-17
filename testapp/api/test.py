@@ -1,4 +1,7 @@
 from rest_framework.test import APITestCase
+from django.test import LiveServerTestCase
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 from rest_framework import status
 
 from api.models import Book, Author
@@ -38,3 +41,10 @@ class AuthorTestCase(APITestCase):
         self.assertEqual(response.data, {'id': 11, 'first_name': 'Martin', 'last_name': 'Luther'})
         response = self.client.post(url, {}, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class AuthorFormTest(LiveServerTestCase):
+
+    def test_author_form(self):
+        selenium = webdriver.Chrome()
+        selenium.get('localhost:8000/api/authors')
