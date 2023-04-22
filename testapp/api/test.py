@@ -1,4 +1,7 @@
 from rest_framework.test import APITestCase
+from django.test import LiveServerTestCase
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 from rest_framework import status
 
 from django.test import LiveServerTestCase

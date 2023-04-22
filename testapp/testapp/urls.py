@@ -21,5 +21,6 @@ from api import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('authors/', views.AuthorList.as_view()),
+    path('users/', views.UserList.as_view(), name='user-list'),
     path('api/', include('api.urls'))
 ]
