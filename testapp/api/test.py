@@ -43,7 +43,6 @@ class AuthorTestCase(APITestCase):
         url = reverse('authors')
         data = {'first_name': 'Martin', 'last_name': 'Luther'}
         response = self.client.post(url, data, format='json')
-        print(response.data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data, {'id': 11, 'first_name': 'Martin', 'last_name': 'Luther'})
         response = self.client.post(url, {}, format='json')
@@ -56,12 +55,45 @@ class SeleniumTests(LiveServerTestCase):
         self.driver = webdriver.Chrome()
 
 
-    def test_selenium(self):
+    def test_authors_selenium(self):
+        from time import sleep
         driver = self.driver
         driver.get(f'http://127.0.0.1:8000{reverse("authors")}')
         first_name = driver.find_element(By.NAME, 'first_name')
         last_name = driver.find_element(By.NAME, 'last_name')
+        sleep(1)
         first_name.send_keys('Radosław')
+        sleep(1)
         last_name.send_keys('Paluch')
+        sleep(3)        
         last_name.send_keys(Keys.RETURN)
         assert 'Radosław' in driver.page_source
+        driver.get(f'http://127.0.0.1:8000{reverse("authors")}?ordering=-id')
+        assert 'Paluch' in driver.page_source
+        sleep(3)
+
+
+    
+    def test_login(self):
+        from time import sleep
+        driver = self.driver
+        driver.get('http://127.0.0.1:8000/api/login/login/?next=/api/users/')
+        username = driver.find_element(By.NAME, 'username')
+        password = driver.find_element(By.NAME, 'password')
+        username.send_keys('admin')
+        sleep(1)
+        password.send_keys('admin')
+        sleep(1)
+        button = driver.find_element(By.NAME, 'submit')
+        button.click()
+        assert 'admin' in driver.page_source
+        sleep(3)
+
+    def test_book_template(self):
+        from time import sleep
+        driver = self.driver
+        driver.get('http://localhost:8000/authors/')
+        assert 'Radosław Paluch' in driver.page_source
+
+    def tearDown(self) -> None:
+        self.driver.close()
