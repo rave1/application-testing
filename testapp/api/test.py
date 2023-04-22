@@ -54,26 +54,19 @@ class SeleniumTests(LiveServerTestCase):
     def setUp(self) -> None:
         self.driver = webdriver.Chrome()
 
-
     def test_authors_selenium(self):
         from time import sleep
         driver = self.driver
         driver.get(f'http://127.0.0.1:8000{reverse("authors")}')
         first_name = driver.find_element(By.NAME, 'first_name')
         last_name = driver.find_element(By.NAME, 'last_name')
-        sleep(1)
         first_name.send_keys('Radosław')
-        sleep(1)
-        last_name.send_keys('Paluch')
-        sleep(3)        
+        last_name.send_keys('Paluch')   
         last_name.send_keys(Keys.RETURN)
         assert 'Radosław' in driver.page_source
         driver.get(f'http://127.0.0.1:8000{reverse("authors")}?ordering=-id')
         assert 'Paluch' in driver.page_source
-        sleep(3)
 
-
-    
     def test_login(self):
         from time import sleep
         driver = self.driver
@@ -81,13 +74,11 @@ class SeleniumTests(LiveServerTestCase):
         username = driver.find_element(By.NAME, 'username')
         password = driver.find_element(By.NAME, 'password')
         username.send_keys('admin')
-        sleep(1)
         password.send_keys('admin')
-        sleep(1)
         button = driver.find_element(By.NAME, 'submit')
         button.click()
         assert 'admin' in driver.page_source
-        sleep(3)
+        assert driver.get_cookie('sessionid') is not None
 
     def test_book_template(self):
         from time import sleep
