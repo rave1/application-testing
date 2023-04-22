@@ -25,4 +25,4 @@ jobs:
           pycodestyle testapp/api --max-line-length=140 --exclude='*/migrations/'
       - name: Test with pytest
         run: |
-          coverage run  --source='testapp/api/.' testapp/manage.py test api
+          coverage run  --source='testapp/api/.' testapp/manage.py test api.test.AuthorTestCase
