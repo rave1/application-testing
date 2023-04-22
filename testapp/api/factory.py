@@ -2,6 +2,7 @@ from factory.django import DjangoModelFactory
 from api.models import Author, Book
 from datetime import date
 
+
 class AuthorFactory(DjangoModelFactory):
 
     first_name = 'John'

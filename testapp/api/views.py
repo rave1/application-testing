@@ -5,7 +5,6 @@ from rest_framework.renderers import TemplateHTMLRenderer
 from api.models import Author
 
 
-
 class AuthorList(APIView):
     renderer_classes = (TemplateHTMLRenderer, )
     template_name = 'author_list.html'
@@ -20,7 +19,7 @@ class AuthorList(APIView):
 class UserList(APIView):
     renderer_classes = (TemplateHTMLRenderer, )
     template_name = 'user_list.html'
+
     def get(self, request):
         queryset = get_user_model().objects.all()
         return Response({'users': queryset})
-

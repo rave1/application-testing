@@ -15,3 +15,13 @@ def coverage(ctx):
     for c in cmd:
         ctx.run(c, pty=True)
     print(msg)
+
+@task
+def pep8(ctx):
+    msg = 'pep8 passed'
+    cmd = [
+        "pycodestyle testapp/api --max-line-length=140 --exclude='*/migrations/'"
+    ]
+    for c in cmd:
+        ctx.run(c, pty=True)
+    print(msg)
