@@ -9,8 +9,6 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 
-
-
 from api.models import Book, Author
 from api.factory import AuthorFactory, BookFactory
 
@@ -61,7 +59,7 @@ class SeleniumTests(LiveServerTestCase):
         first_name = driver.find_element(By.NAME, 'first_name')
         last_name = driver.find_element(By.NAME, 'last_name')
         first_name.send_keys('Radosław')
-        last_name.send_keys('Paluch')   
+        last_name.send_keys('Paluch')
         last_name.send_keys(Keys.RETURN)
         assert 'Radosław' in driver.page_source
         driver.get(f'http://127.0.0.1:8000{reverse("authors")}?ordering=-id')
