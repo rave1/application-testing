@@ -1,6 +1,13 @@
 from rest_framework.test import APITestCase
 from rest_framework import status
 
+from django.test import LiveServerTestCase
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+
+
+
 from api.models import Book, Author
 from api.factory import AuthorFactory, BookFactory
 
@@ -38,3 +45,20 @@ class AuthorTestCase(APITestCase):
         self.assertEqual(response.data, {'id': 11, 'first_name': 'Martin', 'last_name': 'Luther'})
         response = self.client.post(url, {}, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class SeleniumTests(LiveServerTestCase):
+
+    def setUp(self) -> None:
+        self.driver = webdriver.Chrome()
+
+
+    def test_selenium(self):
+        driver = self.driver
+        driver.get(f'http://127.0.0.1:8000{reverse("authors")}')
+        first_name = driver.find_element(By.NAME, 'first_name')
+        last_name = driver.find_element(By.NAME, 'last_name')
+        first_name.send_keys('Radosław')
+        last_name.send_keys('Paluch')
+        last_name.send_keys(Keys.RETURN)
+        assert 'Radosław' in driver.page_source
